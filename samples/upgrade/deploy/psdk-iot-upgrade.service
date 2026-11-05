@@ -1,0 +1,30 @@
+[Unit]
+Description=PSDK IoT payload (Things-Model) — resident upgrade service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# The binary auto-detects "no tty" and runs its background services (widget + upgrade) headless,
+# so no argv/flags are needed. journald captures stdout/stderr; the runtime ALSO keeps a plain
+# timestamped copy at /var/log/psdk_iot.log (override with Environment=THING_MODEL_LOG_FILE=/path,
+# or =off to disable and rely on journald only).
+ExecStart=/usr/local/bin/sample_things_model
+# Run from the install dir so the widget sample's relative asset roots (./config, ./audio) resolve
+# to /usr/local/bin/config etc. Without this, systemd's CWD is / and the widget logs
+# "load_config: read ./config/en/widget_config.json FAIL" (upgrade's own widget uses an absolute
+# self-dir path and is unaffected, but the autostarted widget service needs this).
+WorkingDirectory=/usr/local/bin
+# Arm the runtime gate for REAL install+reboot. Remove this line (or set =dry) to keep it inert.
+Environment=PSDK_UPGRADE_APPLY=1
+# Bring the aircraft-facing network up before dialing the broker (rig-specific, best-effort).
+# The leading '-' makes a non-zero exit non-fatal to the service start. Installed by deploy/install.sh.
+# Tune the topology via Environment=THING_MODEL_NET_UPLINK/_BRIDGE/_BROKER_SUBNET; delete this line
+# if netplan/NetworkManager already brings the network up.
+ExecStartPre=-/usr/local/bin/psdk-net-setup.sh
+Restart=on-failure
+RestartSec=3
+# A real upgrade replaces this binary and reboots; systemd starts the new one on next boot.
+
+[Install]
+WantedBy=multi-user.target

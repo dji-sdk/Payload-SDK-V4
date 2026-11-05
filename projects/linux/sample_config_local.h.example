@@ -1,0 +1,26 @@
+/*
+ * sample_config_local.h.example — local access-credentials template
+ *
+ * Usage:
+ *   cp sample_config_local.h.example sample_config_local.h
+ *   # fill in your app_key / app_license / broker etc. in the copy, then rebuild and run
+ *
+ * Note: keep sample_config_local.h out of version control. Never put real credentials into any
+ *       tracked file.
+ *
+ * The macros below override the placeholder defaults in sample_config.c; at run time they can be
+ * overridden again by the same-name environment variables (THING_MODEL_*), e.g. for CI or quick
+ * switching.
+ */
+#ifndef SAMPLE_CONFIG_LOCAL_H
+#define SAMPLE_CONFIG_LOCAL_H
+
+#define SAMPLE_DEFAULT_APP_ID      "YOUR_APP_ID"
+#define SAMPLE_DEFAULT_APP_NAME    "YOUR_APP_NAME"
+#define SAMPLE_DEFAULT_APP_KEY     "YOUR_APP_KEY"
+#define SAMPLE_DEFAULT_APP_LICENSE "YOUR_APP_LICENSE"
+#define SAMPLE_DEFAULT_DEVICE_SN   "YOUR_DEVICE_SN"
+#define SAMPLE_DEFAULT_BROKER      "127.0.0.1"
+#define SAMPLE_DEFAULT_CA_CERT     "/path/to/ca.crt"
+
+#endif /* SAMPLE_CONFIG_LOCAL_H */

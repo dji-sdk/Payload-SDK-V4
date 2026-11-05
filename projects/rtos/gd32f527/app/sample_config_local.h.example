@@ -1,0 +1,13 @@
+#ifndef SAMPLE_CONFIG_LOCAL_H
+#define SAMPLE_CONFIG_LOCAL_H
+
+#define SAMPLE_APP_ID          "your_app_id"
+#define SAMPLE_APP_NAME        "your_app_name"
+#define SAMPLE_APP_KEY         "your_app_key"
+#define SAMPLE_APP_LICENSE     "your_app_license"
+#define SAMPLE_DEVICE_SN       "your_device_sn"
+#define SAMPLE_BROKER_ADDR     "192.0.2.3"
+#define SAMPLE_BROKER_PORT_TLS 8883
+#define SAMPLE_BROKER_PORT     1883
+
+#endif
